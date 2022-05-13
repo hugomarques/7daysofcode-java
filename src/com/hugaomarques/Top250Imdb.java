@@ -1,13 +1,13 @@
 package com.hugaomarques;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -33,7 +33,9 @@ public class Top250Imdb {
         final var movies = moviesJson.stream()
             .map(Movie::instanceOf)
             .collect(Collectors.toList());
-        System.out.println(movies);
+        final var printWriter = new PrintWriter(new FileWriter("movies.html"));
+        final var htmlGenerator = new HTMLGenerator(printWriter);
+        htmlGenerator.generate(movies);
     }
 
     private static List<String> parseContentJson(String json) {
