@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class ImdbJsonParser {
+public class ImdbJsonParser implements JsonParser {
 
   private String responseContent;
 
@@ -12,6 +12,7 @@ public class ImdbJsonParser {
     this.responseContent = responseContent;
   }
 
+  @Override
   public List<Movie> parse() {
     final var moviesJson = parseContentJson(responseContent);
     return moviesJson.stream()

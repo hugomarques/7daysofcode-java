@@ -45,7 +45,7 @@ public class HTMLGenerator {
   }
 
   private static String fromMovieToMovieHTML(Movie movie) {
-    return String.format(MOVIE_TEMPLATE, movie.getTitle(), movie.getImage(), movie.getTitle(), movie.getRank(), movie.getYear());
+    return String.format(MOVIE_TEMPLATE, movie.title(), movie.urlImage(), movie.title(), movie.rating(), movie.year());
   }
 
 }
