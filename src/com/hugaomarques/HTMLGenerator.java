@@ -21,6 +21,7 @@ public class HTMLGenerator {
   private static final String MOVIE_TEMPLATE =
       "<div class=\"card text-white bg-dark mb-3\" style=\"max-width: 18rem;\">" +
         "<h4 class=\"card-header\">%s</h4>" +
+          "%s" +
         "<div class=\"card-body\">" +
           "<img class=\"card-img\" src=\"%s\" alt=\"%s\">" +
           "<p class=\"card-text mt-2\">Rating: %s - Ano: %s</p>" +
@@ -44,8 +45,8 @@ public class HTMLGenerator {
     }
   }
 
-  private static String fromModelToHTML(Content movie) {
-    return String.format(MOVIE_TEMPLATE, movie.title(), movie.urlImage(), movie.title(), movie.rating(), movie.year());
+  private static String fromModelToHTML(Content content) {
+    return String.format(MOVIE_TEMPLATE, content.title(), content.type(), content.urlImage(), content.title(), content.rating(), content.year());
   }
 
 }

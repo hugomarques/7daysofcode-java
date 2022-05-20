@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 import com.hugaomarques.Content;
 
-public class MarvelSeries implements Content {
+public class MarvelSeries implements Content, Comparable<MarvelSeries> {
 
   private final String title;
   private final String rating;
@@ -30,7 +30,17 @@ public class MarvelSeries implements Content {
     return year;
   }
 
+  @Override
+  public String type() {
+    return "Series";
+  }
+
   public String urlImage() {
     return urlImage;
+  }
+
+  @Override
+  public int compareTo(MarvelSeries that) {
+    return this.rating.compareTo(that.rating);
   }
 }

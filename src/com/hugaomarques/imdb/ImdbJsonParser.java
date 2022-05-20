@@ -51,7 +51,7 @@ public class ImdbJsonParser implements JsonParser {
   }
 
   private static String parseRating(String movie) {
-    return parseAttribute("rank", movie);
+    return parseAttribute("imDbRating", movie);
   }
 
   private static String parseAttribute(String attribute, String movie) {

@@ -6,5 +6,5 @@ public interface Content {
   String urlImage();
   String rating();
   String year();
-
+  String type();
 }

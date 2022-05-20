@@ -24,14 +24,11 @@ public class MarvelSeriesJsonParser implements JsonParser {
     var content = contentMatcher.group(1);
     var seriesAsJson = content.split("\\},\\{\"id\"");
     return Arrays.stream(seriesAsJson).map(
-        series -> {
-          System.out.println(series+"\n\n\n");
-          return new MarvelSeries(
+        series -> new MarvelSeries(
             parseTitle(series),
             parseRating(series),
             parseYears(series),
-            parseImages(series));
-        }
+            parseImages(series))
     ).collect(Collectors.toList());
   }
 

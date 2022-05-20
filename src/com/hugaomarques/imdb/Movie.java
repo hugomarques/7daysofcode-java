@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.hugaomarques.Content;
 
-public class Movie implements Content {
+public class Movie implements Content, Comparable<Movie> {
 
   private String rating;
   private String title;
@@ -30,6 +30,11 @@ public class Movie implements Content {
     return year;
   }
 
+  @Override
+  public String type() {
+    return "Movie";
+  }
+
   public String urlImage() {
     return urlImage;
   }
@@ -51,4 +56,8 @@ public class Movie implements Content {
     return Objects.hash(title, year);
   }
 
+  @Override
+  public int compareTo(Movie that) {
+    return this.rating.compareTo(that.rating);
+  }
 }
