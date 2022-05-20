@@ -1,8 +1,10 @@
-package com.hugaomarques;
+package com.hugaomarques.imdb;
 
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import com.hugaomarques.JsonParser;
 
 public class ImdbJsonParser implements JsonParser {
 
@@ -16,7 +18,12 @@ public class ImdbJsonParser implements JsonParser {
   public List<Movie> parse() {
     final var moviesJson = parseContentJson(responseContent);
     return moviesJson.stream()
-        .map(Movie::instanceOf)
+        .map(movieJson -> new Movie(
+            parseTitle(movieJson),
+            parseRating(movieJson),
+            parseYears(movieJson),
+            parseImages(movieJson)
+        ))
         .collect(Collectors.toList());
   }
 
@@ -29,5 +36,27 @@ public class ImdbJsonParser implements JsonParser {
     final var moviesMatcher = Pattern.compile("\\{(.*?)\\}").matcher(content);
     var groupIndex = 0;
     return moviesMatcher.results().map(result -> result.group()).collect(Collectors.toList());
+  }
+
+  private static String parseImages(String movie) {
+    return parseAttribute("image", movie);
+  }
+
+  private static String parseYears(String movie) {
+    return parseAttribute("year", movie);
+  }
+
+  private static String parseTitle(String movie) {
+    return parseAttribute("title", movie);
+  }
+
+  private static String parseRating(String movie) {
+    return parseAttribute("rank", movie);
+  }
+
+  private static String parseAttribute(String attribute, String movie) {
+    var matcher = Pattern.compile("\""+attribute+"\":\"(.*?)\"").matcher(movie);
+    matcher.find();
+    return matcher.group(1);
   }
 }

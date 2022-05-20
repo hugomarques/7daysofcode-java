@@ -23,7 +23,7 @@ public class HTMLGenerator {
         "<h4 class=\"card-header\">%s</h4>" +
         "<div class=\"card-body\">" +
           "<img class=\"card-img\" src=\"%s\" alt=\"%s\">" +
-          "<p class=\"card-text mt-2\">Nota: %s - Ano: %s</p>" +
+          "<p class=\"card-text mt-2\">Rating: %s - Ano: %s</p>" +
         "</div>" +
       "</div>";
 
@@ -33,10 +33,10 @@ public class HTMLGenerator {
     this.outputWritter = outputWritter;
   }
 
-  public void generate(List<Movie> movies) {
+  public void generate(List<? extends Content> movies) {
     try {
       outputWritter.write(HEAD);
-      final var moviesAsHtml = movies.stream().map(HTMLGenerator::fromMovieToMovieHTML).collect(
+      final var moviesAsHtml = movies.stream().map(HTMLGenerator::fromModelToHTML).collect(
           Collectors.joining());
       outputWritter.write(String.format(HTML_BODY_TEMPLATE, moviesAsHtml));
     } catch (IOException e) {
@@ -44,7 +44,7 @@ public class HTMLGenerator {
     }
   }
 
-  private static String fromMovieToMovieHTML(Movie movie) {
+  private static String fromModelToHTML(Content movie) {
     return String.format(MOVIE_TEMPLATE, movie.title(), movie.urlImage(), movie.title(), movie.rating(), movie.year());
   }
 

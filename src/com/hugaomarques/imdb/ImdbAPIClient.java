@@ -1,4 +1,4 @@
-package com.hugaomarques;
+package com.hugaomarques.imdb;
 
 import java.io.IOException;
 import java.net.URI;
@@ -7,20 +7,25 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class ImdbAPIClient {
+import com.hugaomarques.APIClient;
+
+public class ImdbAPIClient implements APIClient {
 
   private static final String URL = "https://imdb-api.com/en/API/Top250Movies/";
 
   private String apiToken;
 
   public ImdbAPIClient(String apiToken) {
+    if (apiToken == null || apiToken.isEmpty()) {
+      throw new IllegalStateException("Token is empty");
+    }
     this.apiToken = apiToken;
   }
 
+  @Override
   public String getBody() {
-    final HttpRequest request;
     try {
-      request = HttpRequest.newBuilder()
+      var request = HttpRequest.newBuilder()
           .uri(new URI(URL + this.apiToken))
           .GET()
           .build();
